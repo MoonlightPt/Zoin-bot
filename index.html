@@ -8,6 +8,19 @@
 </head>
 <body>
     <div class="hero">
+        <div class="status-row">
+            <span class="status-indicator online"></span>
+            <span class="status-text">Online</span>
+            <span class="mood-label">Mood:</span>
+            <select id="mood-select">
+                <option value="roasty" selected>Roasty 🔥</option>
+                <option value="chill">Chill 🧊</option>
+                <option value="sassy">Sassy 💅</option>
+                <option value="friendly">Friendly 😊</option>
+                <option value="angry">Angry 😡</option>
+            </select>
+            <span id="mood-color" class="mood-color roasty"></span>
+        </div>
         <h1 class="title">🔥 Discord Roast Bot 🔥</h1>
         <p class="subtitle">The ultimate bot to roast your friends with style and wit!</p>
         <a class="invite-btn" href="#" target="_blank">Invite to Discord</a>
@@ -34,6 +47,28 @@
         <p>Made with ❤️ for Discord communities. <span class="small">Not affiliated with Discord Inc.</span></p>
     </footer>
     <script src="script.js"></script>
+</body>
+<script>
+// Mood color logic
+const moodColors = {
+  roasty: '#ffb347',
+  chill: '#5fd0ff',
+  sassy: '#e75480',
+  friendly: '#43b581',
+  angry: '#ff4747'
+};
+const moodSelect = document.getElementById('mood-select');
+const moodColor = document.getElementById('mood-color');
+if (moodSelect && moodColor) {
+  function updateMoodColor() {
+    const mood = moodSelect.value;
+    moodColor.style.background = moodColors[mood] || '#ffb347';
+    moodColor.className = 'mood-color ' + mood;
+  }
+  moodSelect.addEventListener('change', updateMoodColor);
+  updateMoodColor();
+}
+</script>
 </body>
 </html>
 
