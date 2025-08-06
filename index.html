@@ -8,13 +8,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body style="background: linear-gradient(135deg, #23272a 0%, #7289da 60%, #43b581 100%); color: #fff;">
+    <div class="glass-bg"></div>
+    <nav class="navbar">
+        <span class="nav-title">🔥 Discord Roast Bot</span>
+        <span class="nav-links">
+            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link" href="#features">Features</a>
+            <a class="nav-link" href="#demo">Demo</a>
+            <a class="nav-link" href="#invite">Invite</a>
+        </span>
+        <span class="nav-title">🔥 Discord Roast Bot</span>
+        <span class="nav-links">
+            <a class="nav-link" href="#hero">Home</a>
+            <a class="nav-link" href="#features">Features</a>
+            <a class="nav-link" href="#demo">Demo</a>
+            <a class="nav-link" href="#invite">Invite</a>
+        </span>
+    </nav>
     <div class="floating-bg">
         <div class="floating-gradient one"></div>
         <div class="floating-gradient two"></div>
         <div class="floating-gradient three"></div>
     </div>
     <div class="hero glass">
-        <div class="status-row">
+        <div id="hero" class="status-row">
             <span class="status-indicator online"></span>
             <span class="status-text">Online</span>
             <span class="mood-label">Mood:</span>
@@ -32,7 +49,7 @@
         <a class="invite-btn" href="#" target="_blank">Invite to Discord</a>
     </div>
     <section class="info glass">
-        <h2>What does the Roast Bot do?</h2>
+        <h2 id="features">What does the Roast Bot do?</h2>
         <ul>
             <li>Roasts anyone you mention with <span class="cmd">!roast @user</span> or just yourself with <span class="cmd">!roast</span>.</li>
             <li>Has a huge collection of clever, funny, and savage roast lines.</li>
@@ -40,16 +57,49 @@
             <li>Easy to use and always ready to roast egos!</li>
         </ul>
     </section>
+    <section id="dashboard" class="dashboard glass">
+        <h2>Bot Dashboard</h2>
+        <div class="dashboard-cards">
+            <div class="dashboard-card">
+                <h3>Commands</h3>
+                <ul class="command-list">
+                    <li><span class="cmd">!roast @user</span> <span class="cmd-desc">Roast a mentioned user with a witty comeback.</span></li>
+                    <li><span class="cmd">!roast</span> <span class="cmd-desc">Roast yourself with a random roast.</span></li>
+                    <li><span class="cmd">!ping</span> <span class="cmd-desc">Check if the bot is online.</span></li>
+                </ul>
+            </div>
+            <div class="dashboard-card">
+                <h3>Features</h3>
+                <ul class="feature-list">
+                    <li>Customizable roast lines (coming soon)</li>
+                    <li>Personality moods</li>
+                    <li>Easy-to-use dashboard</li>
+                    <li>Invite management</li>
+                </ul>
+            </div>
+            <div class="dashboard-card dashboard-placeholder">
+                <h3>More Controls</h3>
+                <div class="placeholder-text">Interactive controls and settings coming soon!</div>
+            </div>
+        </div>
+    </section>
     <section class="demo glass">
-        <h2>See it in action!</h2>
+        <h2 id="demo">See it in action!</h2>
         <div class="chat-window">
             <div class="msg user">
                 <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="User" />
-                <span>You: !roast @Alex</span>
+                <span>
+                    <span class="username">You</span>
+                    <span class="timestamp">Today at 4:20 PM</span>
+                    !roast @Alex
+                </span>
             </div>
             <div class="msg bot animate">
                 <img class="avatar" src="https://cdn.discordapp.com/avatars/112233445566778899/ab12cd34ef56gh78ij90kl.png?size=64" alt="Roast Bot" />
-                <span><strong>Roast Bot</strong> <span class="bot-tag">BOT</span> <span class="mention">@Alex</span>, You're as useless as the 'ueue' in 'queue'.</span>
+                <span>
+                    <span><span class="username bot">Roast Bot</span> <span class="bot-tag">BOT</span> <span class="timestamp">Today at 4:20 PM</span></span>
+                    <span><span class="mention">@Alex</span>, You're as useless as the 'ueue' in 'queue'.</span>
+                </span>
                 <div class="embed">
                     <div class="embed-color"></div>
                     <div class="embed-content">
@@ -60,11 +110,18 @@
             </div>
             <div class="msg user">
                 <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/1.png" alt="User" />
-                <span>You: !roast</span>
+                <span>
+                    <span class="username">You</span>
+                    <span class="timestamp">Today at 4:21 PM</span>
+                    !roast
+                </span>
             </div>
             <div class="msg bot animate">
                 <img class="avatar" src="https://cdn.discordapp.com/avatars/112233445566778899/ab12cd34ef56gh78ij90kl.png?size=64" alt="Roast Bot" />
-                <span><strong>Roast Bot</strong> <span class="bot-tag">BOT</span> <span class="mention">@You</span>, If I wanted a joke, I'd just look at you.</span>
+                <span>
+                    <span><span class="username bot">Roast Bot</span> <span class="bot-tag">BOT</span> <span class="timestamp">Today at 4:21 PM</span></span>
+                    <span><span class="mention">@You</span>, If I wanted a joke, I'd just look at you.</span>
+                </span>
                 <div class="embed">
                     <div class="embed-color"></div>
                     <div class="embed-content">
