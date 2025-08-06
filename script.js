@@ -1,4 +1,17 @@
-// Animate chat messages on page load
+// Scroll-triggered animation for sections
+function revealOnScroll() {
+  const revealSections = document.querySelectorAll('.dashboard, .info, .demo');
+  const windowHeight = window.innerHeight;
+  revealSections.forEach(section => {
+    const sectionTop = section.getBoundingClientRect().top;
+    if (sectionTop < windowHeight - 80) {
+      section.classList.add('visible');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+window.addEventListener('DOMContentLoaded', revealOnScroll);// Animate chat messages on page load
 window.addEventListener('DOMContentLoaded', () => {
     const msgs = document.querySelectorAll('.msg');
     msgs.forEach((msg, i) => {
