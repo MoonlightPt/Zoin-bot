@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Discord Roast Bot | The Ultimate Roasting Bot for Discord</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🔥</text></svg>">
     <link rel="stylesheet" href="style.css">
 </head>
 <body style="background: linear-gradient(135deg, #23272a 0%, #7289da 60%, #43b581 100%); color: #fff;">
-    <div class="hero" style="box-shadow: 0 8px 32px #43b58155, 0 0 0 8px #7289da22;">
+    <div class="floating-bg">
+        <div class="floating-gradient one"></div>
+        <div class="floating-gradient two"></div>
+        <div class="floating-gradient three"></div>
+    </div>
+    <div class="hero glass">
         <div class="status-row">
             <span class="status-indicator online"></span>
             <span class="status-text">Online</span>
@@ -21,11 +27,11 @@
             </select>
             <span id="mood-color" class="mood-color roasty"></span>
         </div>
-        <h1 class="title" style="background: linear-gradient(90deg, #ffb347 10%, #7289da 60%, #43b581 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; color: transparent;">🔥 Discord Roast Bot 🔥</h1>
+        <h1 class="title">🔥 Discord Roast Bot 🔥</h1>
         <p class="subtitle">The ultimate bot to roast your friends with style and wit!</p>
-        <a class="invite-btn" href="#" target="_blank" style="background: linear-gradient(90deg, #ffb347 0%, #7289da 60%, #43b581 100%); color: #23272a; border: 2px solid #ffb347;">Invite to Discord</a>
+        <a class="invite-btn" href="#" target="_blank">Invite to Discord</a>
     </div>
-    <section class="info" style="border-left: 6px solid #7289da; border-right: 6px solid #43b581; background: rgba(44,47,51,0.96);">
+    <section class="info glass">
         <h2>What does the Roast Bot do?</h2>
         <ul>
             <li>Roasts anyone you mention with <span class="cmd">!roast @user</span> or just yourself with <span class="cmd">!roast</span>.</li>
@@ -34,7 +40,7 @@
             <li>Easy to use and always ready to roast egos!</li>
         </ul>
     </section>
-    <section class="demo" style="border-left: 6px solid #ffb347; border-right: 6px solid #7289da; background: rgba(44,47,51,0.96);">
+    <section class="demo glass">
         <h2>See it in action!</h2>
         <div class="chat-window">
             <div class="msg user">You: !roast @Alex</div>
@@ -43,7 +49,7 @@
             <div class="msg bot animate">@You, If I wanted a joke, I'd just look at you.</div>
         </div>
     </section>
-    <footer style="background: linear-gradient(90deg, #23272a 60%, #7289da 100%); border-top: 3px solid #ffb347;">
+    <footer>
         <p>Made with ❤️ for Discord communities. <span class="small">Not affiliated with Discord Inc.</span></p>
     </footer>
 </body>
