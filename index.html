@@ -215,6 +215,8 @@
   </div>
   <div class="container">
     <h1><span class="oreo-accent">Oreo Bot</span> <span class="oreo-cookie">🪐</span></h1>
+    <!-- Mario Intro Song Easter Egg (hidden audio) -->
+    <audio id="mario-intro-audio" src="https://cdn.jsdelivr.net/gh/rohitguptab/audio-host/mario-intro.mp3" preload="auto" style="display:none;"></audio>
     <div class="tagline">"Stacking up the sass, dunking on your garden, and serving up roasts with a cosmic twist. Welcome to the only Discord bot that's double-stuffed with attitude!"</div>
     <div class="buttons">
       <a href="https://discord.com/oauth2/authorize?client_id=1102560580532961351&permissions=8&integration_type=0&scope=bot" class="oreo-btn" target="_blank" rel="noopener">Invite Oreo Bot</a>
@@ -401,7 +403,18 @@
   <script>
   // Starfield animation that adds stars as you scroll
 
-  // --- Multiple Easter Eggs ---
+  // --- Mario Intro Song Easter Egg ---
+  function playMarioIntroEasterEgg() {
+    // 3% chance to play on page load
+    if (Math.random() < 0.03) {
+      const audio = document.getElementById('mario-intro-audio');
+      // Try to play after a short delay for user gesture compatibility
+      setTimeout(() => {
+        audio.volume = 0.5;
+        audio.play().catch(()=>{});
+      }, 800);
+    }
+  }
   function showEasterEgg(id, chance) {
     const el = document.getElementById(id);
     if (Math.random() < chance) {
@@ -423,6 +436,7 @@
     showEasterEgg('ufo-easter-egg', 0.05);
     showEasterEgg('star-easter-egg', 0.08);
     showEasterEgg('cookie-easter-egg', 0.12);
+    playMarioIntroEasterEgg();
   });
   const canvas = document.getElementById('star-canvas');
   const ctx = canvas.getContext('2d');
