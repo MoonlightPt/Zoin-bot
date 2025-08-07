@@ -1,140 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discord Roast Bot | The Ultimate Roasting Bot for Discord</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🔥</text></svg>">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zion Bot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
+  <style>
+  .roast-slider {
+    display: flex;
+    overflow: hidden;
+    max-width: 520px;
+    margin: 0 auto 1.5rem auto;
+    position: relative;
+    min-height: 2.5em;
+    align-items: center;
+    justify-content: center;
+  }
+  .roast-slide {
+    min-width: 100%;
+    transition: transform 0.6s cubic-bezier(.4,2,.3,1);
+    opacity: 0;
+    position: absolute;
+    left: 0; top: 0;
+    right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.13rem;
+    color: #f06292;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  .roast-slide.active {
+    opacity: 1;
+    position: relative;
+    z-index: 2;
+  }
+  .roast-slider-controls {
+    margin-top: 0.5em;
+    text-align: center;
+  }
+  .roast-slider-btn {
+    background: #7f53c0;
+    color: #fff;
+    border: none;
+    border-radius: 1em;
+    padding: 0.3em 1em;
+    margin: 0 0.3em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .roast-slider-btn:hover {
+    background: #a259f7;
+  }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(180deg, #0a0a23 0%, #0d47a1 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .garden-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .plant, .egg, .slime {
+      position: absolute;
+      font-size: 2.5rem;
+      animation: float 3s ease-in-out infinite alternate;
+    }
+    .egg { left: 20vw; top: 60vh; animation-delay: 0.5s; }
+    .plant { left: 60vw; top: 70vh; animation-delay: 1.2s; }
+    .slime { left: 40vw; top: 75vh; animation-delay: 2s; }
+    @keyframes float {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 3rem 1rem 2rem 1rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2.7rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #a259f7 10%, #7f53c0 50%, #4e54c8 90%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 12px #a259f799;
+      letter-spacing: 1px;
+    }
+    .tagline {
+      font-size: 1.3rem;
+      color: #b39ddb;
+      margin-bottom: 2rem;
+      font-style: italic;
+      text-shadow: 0 1px 8px #0006;
+    }
+    .buttons {
+      margin-bottom: 2rem;
+    }
+    .btn {
+      display: inline-block;
+      background: #43a047;
+      color: #fff;
+      padding: 0.7em 1.5em;
+      border-radius: 2em;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 0 0.5em;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px #0001;
+    }
+    .btn:hover { background: #388e3c; }
+    .roast-box {
+      background: #2e1534;
+      border-left: 6px solid #a259f7;
+      border-radius: 0.5em;
+      margin: 2rem auto 1rem auto;
+      padding: 1.2em 1em;
+      font-size: 1.15rem;
+      color: #e1bee7;
+      max-width: 480px;
+      box-shadow: 0 2px 18px #a259f733;
+    }
+    .footer {
+      margin-top: 3rem;
+      color: #b39ddb;
+      font-size: 1rem;
+      text-shadow: 0 1px 8px #0006;
+    }
+    @media (max-width: 600px) {
+      h1 { font-size: 1.5rem; }
+      .container { padding: 2rem 0.5rem; }
+      .roast-box { font-size: 1rem; }
+    }
+  </style>
 </head>
-<body style="background: linear-gradient(135deg, #23272a 0%, #7289da 60%, #43b581 100%); color: #fff;">
-    <div class="glass-bg"></div>
-    <nav class="navbar">
-        <span class="nav-title">🔥 Discord Roast Bot</span>
-        <span class="nav-links">
-            <a class="nav-link" href="#">Home</a>
-            <a class="nav-link" href="#features">Features</a>
-            <a class="nav-link" href="#demo">Demo</a>
-            <a class="nav-link" href="#invite">Invite</a>
-        </span>
-        <span class="nav-title">🔥 Discord Roast Bot</span>
-        <span class="nav-links">
-            <a class="nav-link" href="#hero">Home</a>
-            <a class="nav-link" href="#features">Features</a>
-            <a class="nav-link" href="#demo">Demo</a>
-            <a class="nav-link" href="#invite">Invite</a>
-        </span>
-    </nav>
-    <div class="floating-bg">
-        <div class="floating-gradient one"></div>
-        <div class="floating-gradient two"></div>
-        <div class="floating-gradient three"></div>
+<body>
+  <div class="garden-bg">
+    <span class="plant" style="left:10vw;top:80vh;">🌱</span>
+    <span class="plant" style="left:60vw;top:70vh;">🪴</span>
+    <span class="egg" style="left:20vw;top:60vh;">🥚</span>
+    <span class="egg" style="left:80vw;top:65vh;">🥚</span>
+    <span class="slime" style="left:40vw;top:75vh;">🟢</span>
+    <span class="slime" style="left:70vw;top:78vh;">🟣</span>
+  </div>
+  <div class="container">
+    <h1>Zion Bot</h1>
+    <div class="tagline">"Grow a garden, mutate a slime, and get roasted by your new favorite bot. Now with mood swings and maximum sass!"</div>
+    <div class="buttons">
+      <a href="https://discord.com/oauth2/authorize?client_id=1102560580532961351&permissions=8&integration_type=0&scope=bot" class="btn" target="_blank" rel="noopener">Invite Bot</a>
+      <a href="#" class="btn" style="background:#0288d1;">Support Server</a>
     </div>
-    <div class="hero glass">
-        <div id="hero" class="status-row">
-            <span class="status-indicator online"></span>
-            <span class="status-text">Online</span>
-            <span class="mood-label">Mood:</span>
-            <select id="mood-select">
-                <option value="roasty" selected>Roasty 🔥</option>
-                <option value="chill">Chill 🧊</option>
-                <option value="sassy">Sassy 💅</option>
-                <option value="friendly">Friendly 😊</option>
-                <option value="angry">Angry 😡</option>
-            </select>
-            <span id="mood-color" class="mood-color roasty"></span>
+    <div class="roast-box">
+      <b>Roast of the Week:</b><br>
+      <i>Imagine having a sad slime and thinking it's a mood — grow up.</i>
+      <br><br>
+      <b>Bot Mood:</b> <span style="font-size:1.2em;">😄</span> <span style="color:#b39ddb;">Happy (bonus fruits!)</span>
+      <br>
+      <b>Latest Achievement:</b> <span style="color:#ffd600;">Mutation Maniac</span>
+    </div>
+    <div style="margin-top:2.5rem;">
+      <a href="#features" class="btn" style="background:#ffb300;color:#fff;">See Features</a>
+      <a href="#roastzone" class="btn" style="background:#e53935;color:#fff;">Roast Zone</a>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" style="margin-top:4rem; padding:2rem 0;">
+      <h2 style="background:linear-gradient(90deg,#a259f7,#4e54c8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🌿 Game Features</h2>
+      <ul style="list-style:none; padding:0; font-size:1.13rem; color:#b3b3ff; text-align:left; max-width:500px; margin:0 auto;">
+        <li>🥚 <b>Egg Growth</b> — Hatch eggs into unique creatures with their own personalities.</li>
+        <li>🔬 <b>Mutations</b> — Rare and wild forms from events or randomness. Some slimes get weird. Like, really weird.</li>
+        <li>🍓 <b>Fruit Farming</b> — Harvest and sell fruits for coins. Some fruits are so rare, even the bot gets jealous.</li>
+        <li>💰 <b>Economy</b> — Upgrade, trade, and get rich. Or go broke buying roast protection charms.</li>
+        <li>🏡 <b>Garden Customization</b> — Design and expand your space. Make your garden the envy of the server.</li>
+        <li>😄 <b>Mood System</b> — Slimes with dynamic moods that affect performance and trigger unique roasts.</li>
+        <li>🔥 <b>Bot Roasts You</b> — Sassy personality mode with auto roasts based on gameplay, mood, and luck.</li>
+        <li>🎖️ <b>Achievements & Leaderboards</b> — Unlock titles like "Mutation Maniac" and "Roast Victim Supreme".</li>
+      </ul>
+      <div style="margin-top:2rem; color:#b39ddb; font-size:1.05rem;">
+        <b>Did you know?</b> The bot's mood changes daily. Try cheering it up (or making it mad) for different effects!
+      </div>
+    </div>
+
+    <!-- Roast Zone Section -->
+    <div id="roastzone" style="margin-top:4rem; padding:2rem 0;">
+      <h2 style="background:linear-gradient(90deg,#e539d1,#7f53c0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🔥 Roast Zone</h2>
+      <div style="font-size:1.13rem; color:#f06292; max-width:540px; margin:0 auto 1.5rem auto;">
+        <b>Live Roast Gallery</b>:
+        <div class="roast-slider" id="roast-slider"></div>
+        <div class="roast-slider-controls">
+          <button class="roast-slider-btn" id="roast-prev" aria-label="Previous roast">&lt;</button>
+          <button class="roast-slider-btn" id="roast-next" aria-label="Next roast">&gt;</button>
         </div>
-        <h1 class="title">🔥 Discord Roast Bot 🔥</h1>
-        <p class="subtitle">The ultimate bot to roast your friends with style and wit!</p>
-        <a class="invite-btn" href="#" target="_blank">Invite to Discord</a>
+      </div>
+      <form id="roast-form" style="margin:1.5em auto 1em auto; max-width:420px; background:#1a1333; border-radius:0.5em; padding:1em 1em 0.5em 1em; box-shadow:0 2px 12px #a259f733;">
+        <label for="roast-input" style="color:#b39ddb; font-weight:bold;">Submit Your Roast:</label><br>
+        <textarea id="roast-input" rows="2" maxlength="180" style="width:100%; border-radius:0.4em; border:none; margin:0.5em 0; padding:0.5em; font-size:1em; background:#2e1534; color:#e1bee7;"></textarea><br>
+        <button type="submit" class="btn" style="background:#ffb300;color:#fff; margin-bottom:0.5em;">Send Roast</button>
+        <span id="roast-msg" style="color:#ffd600; font-size:0.98em; margin-left:0.5em;"></span>
+      </form>
+      <a href="#" class="btn" style="background:#7f53c0;color:#fff;">Roast Leaderboard</a>
+      <div style="margin-top:2rem; color:#b39ddb; font-size:1.05rem;">
+        <b>Roast Tip:</b> The more you play, the more creative the bot's roasts get. Survive the leaderboard if you can!
+      </div>
+      <script>
+        // Roast slider logic
+        const roasts = [
+          `"You spent all your coins on a common egg? Financial advice needed ASAP."`,
+          `"Your garden's so empty, it's just emotional damage with flowers."`,
+          `"Your slime’s sad because it lives in your command history."`,
+          `"That slime's tears could water a real garden."`,
+          `"Your slime’s got more rage issues than you."`,
+          `"Either your slime’s on sugar or caffeine."`,
+          `"This slime’s more relaxed than your weekend plans."`
+        ];
+        let roastIndex = 0;
+        function renderRoastSlides() {
+          const slider = document.getElementById('roast-slider');
+          slider.innerHTML = '';
+          roasts.forEach((roast, i) => {
+            const div = document.createElement('div');
+            div.className = 'roast-slide' + (i === roastIndex ? ' active' : '');
+            div.innerHTML = `<i>${roast}</i>`;
+            slider.appendChild(div);
+          });
+        }
+        function showRoast(idx) {
+          roastIndex = (idx + roasts.length) % roasts.length;
+          renderRoastSlides();
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          renderRoastSlides();
+          document.getElementById('roast-prev').onclick = () => showRoast(roastIndex - 1);
+          document.getElementById('roast-next').onclick = () => showRoast(roastIndex + 1);
+          // Submission logic
+          const roastForm = document.getElementById('roast-form');
+          const roastInput = document.getElementById('roast-input');
+          const roastMsg = document.getElementById('roast-msg');
+          roastForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const text = roastInput.value.trim();
+            if (text.length < 4) {
+              roastMsg.textContent = 'Roast too short!';
+              return;
+            }
+            if (text.length > 180) {
+              roastMsg.textContent = 'Roast too long!';
+              return;
+            }
+            roasts.push(text.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+            roastInput.value = '';
+            roastMsg.textContent = 'Roast submitted!';
+            showRoast(roasts.length - 1);
+            // Send to backend API
+            fetch('http://localhost:5050/submit_roast', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ roast: text })
+            }).then(r => {
+              if (!r.ok) throw new Error('API error');
+              return r.json();
+            }).then(data => {
+              // Optionally show a message
+            }).catch(err => {
+              roastMsg.textContent = 'Roast saved locally, but not sent to bot.';
+            });
+            setTimeout(()=>{ roastMsg.textContent = ''; }, 2000);
+          });
+        });
+      </script>
     </div>
-    <section class="info glass">
-        <h2 id="features">What does the Roast Bot do?</h2>
-        <ul>
-            <li>Roasts anyone you mention with <span class="cmd">!roast @user</span> or just yourself with <span class="cmd">!roast</span>.</li>
-            <li>Has a huge collection of clever, funny, and savage roast lines.</li>
-            <li>Brings personality and fun to your Discord server.</li>
-            <li>Easy to use and always ready to roast egos!</li>
+    <!-- Mood System Section -->
+    <div id="moods" style="margin-top:4rem; padding:2rem 0;">
+      <h2 style="background:linear-gradient(90deg,#7f53c0,#a259f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🎭 Mood System</h2>
+      <div style="color:#b39ddb; font-size:1.13rem; max-width:540px; margin:0 auto 1.5rem auto;">
+        Slimes have moods that change based on care, events, items, or pure chaos. Each mood affects gameplay and triggers unique roasts!
+        <ul style="list-style:none; padding:0; margin:1em 0;">
+          <li>😊 <b>Happy</b> – Bonus fruits, positive vibes</li>
+          <li>😢 <b>Sad</b> – Grows slower, roast: <i>"That slime's tears could water a real garden."</i></li>
+          <li>😡 <b>Angry</b> – More mutations, roast: <i>"Your slime’s got more rage issues than you."</i></li>
+          <li>🤪 <b>Hyper</b> – Random effects, roast: <i>"Either your slime’s on sugar or caffeine."</i></li>
+          <li>😌 <b>Chill</b> – Higher rare fruit chance, roast: <i>"This slime’s more relaxed than your weekend plans."</i></li>
         </ul>
-    </section>
-    <section id="dashboard" class="dashboard glass">
-        <h2>Bot Dashboard</h2>
-        <div class="dashboard-cards">
-            <div class="dashboard-card">
-                <h3>Commands</h3>
-                <ul class="command-list">
-                    <li><span class="cmd">!roast @user</span> <span class="cmd-desc">Roast a mentioned user with a witty comeback.</span></li>
-                    <li><span class="cmd">!roast</span> <span class="cmd-desc">Roast yourself with a random roast.</span></li>
-                    <li><span class="cmd">!ping</span> <span class="cmd-desc">Check if the bot is online.</span></li>
-                </ul>
-            </div>
-            <div class="dashboard-card">
-                <h3>Features</h3>
-                <ul class="feature-list">
-                    <li>Customizable roast lines (coming soon)</li>
-                    <li>Personality moods</li>
-                    <li>Easy-to-use dashboard</li>
-                    <li>Invite management</li>
-                </ul>
-            </div>
-            <div class="dashboard-card dashboard-placeholder">
-                <h3>More Controls</h3>
-                <div class="placeholder-text">Interactive controls and settings coming soon!</div>
-            </div>
-        </div>
-    </section>
-    <section class="demo glass">
-        <h2 id="demo">See it in action!</h2>
-        <div class="chat-window">
-            <div class="msg user">
-                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="User" />
-                <span>
-                    <span class="username">You</span>
-                    <span class="timestamp">Today at 4:20 PM</span>
-                    !roast @Alex
-                </span>
-            </div>
-            <div class="msg bot animate">
-                <img class="avatar" src="https://cdn.discordapp.com/avatars/112233445566778899/ab12cd34ef56gh78ij90kl.png?size=64" alt="Roast Bot" />
-                <span>
-                    <span><span class="username bot">Roast Bot</span> <span class="bot-tag">BOT</span> <span class="timestamp">Today at 4:20 PM</span></span>
-                    <span><span class="mention">@Alex</span>, You're as useless as the 'ueue' in 'queue'.</span>
-                </span>
-                <div class="embed">
-                    <div class="embed-color"></div>
-                    <div class="embed-content">
-                        <div class="embed-title">🔥 Roast Delivered!</div>
-                        <div class="embed-desc">Alex just got roasted by the Discord Roast Bot. Want to try? Type <span class="cmd">!roast @user</span> or <span class="cmd">!roast</span>!</div>
-                    </div>
-                </div>
-            </div>
-            <div class="msg user">
-                <img class="avatar" src="https://cdn.discordapp.com/embed/avatars/1.png" alt="User" />
-                <span>
-                    <span class="username">You</span>
-                    <span class="timestamp">Today at 4:21 PM</span>
-                    !roast
-                </span>
-            </div>
-            <div class="msg bot animate">
-                <img class="avatar" src="https://cdn.discordapp.com/avatars/112233445566778899/ab12cd34ef56gh78ij90kl.png?size=64" alt="Roast Bot" />
-                <span>
-                    <span><span class="username bot">Roast Bot</span> <span class="bot-tag">BOT</span> <span class="timestamp">Today at 4:21 PM</span></span>
-                    <span><span class="mention">@You</span>, If I wanted a joke, I'd just look at you.</span>
-                </span>
-                <div class="embed">
-                    <div class="embed-color"></div>
-                    <div class="embed-content">
-                        <div class="embed-title">💡 Pro Tip</div>
-                        <div class="embed-desc">Mention a friend to roast them, or use <span class="cmd">!roast</span> to roast yourself!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <footer>
-        <p>Made with ❤️ for Discord communities. <span class="small">Not affiliated with Discord Inc.</span></p>
-    </footer>
+        <span style="font-size:0.98em; color:#b3b3ff;">Use mood potions or special items to influence your slimes!</span>
+      </div>
+    </div>
+
+    <!-- Shop Showcase Section -->
+    <div id="shop" style="margin-top:4rem; padding:2rem 0;">
+      <h2 style="background:linear-gradient(90deg,#4e54c8,#a259f7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🧺 In-Game Shop Showcase</h2>
+      <div style="color:#b3b3ff; font-size:1.13rem; max-width:540px; margin:0 auto 1.5rem auto;">
+        <ul style="list-style:none; padding:0; margin:1em 0;">
+          <li>🌱 <b>Fertilizer</b> – Speeds up plant growth</li>
+          <li>🥚 <b>Egg Types</b> – Basic, Mossy, Spiky, Crystal, Mystery, Event</li>
+          <li>🧪 <b>Mood Potions</b> – Change your slime's mood instantly</li>
+          <li>🛡️ <b>Roast Protection Charm</b> – Blocks roasts for 1 day (for cowards 😂)</li>
+        </ul>
+        <span style="font-size:0.98em; color:#b39ddb;">Visit the shop in Discord to see all items and upgrades!</span>
+      </div>
+    </div>
+
+    <!-- Help & FAQ Section -->
+    <div id="help" style="margin-top:4rem; padding:2rem 0;">
+      <h2 style="background:linear-gradient(90deg,#43a047,#7f53c0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">📘 Help & FAQ</h2>
+      <div style="color:#b3b3ff; font-size:1.13rem; max-width:540px; margin:0 auto 1.5rem auto; text-align:left;">
+        <b>How do I start playing?</b><br>
+        Invite Zion Bot, use <code>!help</code> or <code>!help_garden</code> in your server.<br><br>
+        <b>How do moods work?</b><br>
+        Slimes change moods based on your actions, items, and random events. Moods affect gameplay and roasts.<br><br>
+        <b>What triggers a roast?</b><br>
+        Roasts can happen when you plant, harvest, mutate, or just exist. The sass is real.<br><br>
+        <b>Where can I see all commands?</b><br>
+        Use <code>!help</code> or <code>!help_garden</code> in Discord.<br><br>
+        <b>Need more help?</b><br>
+        DM <b style="color:#fff; background:#7f53c0; border-radius:0.3em; padding:0.1em 0.4em;">Oreo_pt</b> on Discord!
+      </div>
+    </div>
+
+    <div class="footer">
+      &copy; 2025 Grow a Garden Bot &mdash; <a href="#" style="color:#388e3c;text-decoration:underline;">Privacy Policy</a>
+      <br>
+      <span title="You call that a garden? Even my code grows faster.">🐌</span>
+      <br><br>
+      <div id="creator" style="margin-top:1.5em; color:#b39ddb; font-size:1.08em;">
+        <b>Creator:</b> <span style="color:#ffd600;">cooki</span> <span style="font-size:1.2em;">🍪</span><br>
+        <span style="font-size:0.98em; color:#b39ddb;">Discord: <b style="color:#fff; background:#7f53c0; border-radius:0.3em; padding:0.1em 0.4em;">Oreo_pt</b></span><br>
+        <span style="font-size:0.98em; color:#b39ddb;">Built with love, sass, and a lot of slimes.</span>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
-
