@@ -296,6 +296,12 @@
     <span id="spaceinvader-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:25vw;top:15vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">👾</span>
     <span id="milk-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:75vw;top:30vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🥛</span>
     <span id="ice-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:45vw;top:10vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🧊</span>
+    <!-- Even more secret easter eggs -->
+    <span id="rainbow-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:60vw;top:15vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🌈</span>
+    <span id="cheese-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:15vw;top:40vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🧀</span>
+    <span id="robot-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:80vw;top:10vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🤖</span>
+    <span id="ghost-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:10vw;top:20vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">👻</span>
+    <span id="disco-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:50vw;top:5vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🪩</span>
   </div>
   <!-- Mario Tube Easter Egg removed -->
   <div class="container">
@@ -687,6 +693,12 @@ document.addEventListener('DOMContentLoaded', function() {
     showEasterEgg('spaceinvader-easter-egg', 0.05);
     showEasterEgg('milk-easter-egg', 0.05);
     showEasterEgg('ice-easter-egg', 0.05);
+    // Even more easter eggs
+    showEasterEgg('rainbow-easter-egg', 0.04);
+    showEasterEgg('cheese-easter-egg', 0.05);
+    showEasterEgg('robot-easter-egg', 0.04);
+    showEasterEgg('ghost-easter-egg', 0.05);
+    showEasterEgg('disco-easter-egg', 0.03);
     // Special effect for milk: if it appears, briefly show a splash overlay
     if (document.getElementById('milk-easter-egg').style.display === 'block') {
       const splash = document.createElement('div');
@@ -712,6 +724,75 @@ document.addEventListener('DOMContentLoaded', function() {
         roastBox.style.filter = 'blur(1.5px) brightness(1.1)';
         setTimeout(()=>{ roastBox.style.filter = ''; }, 2200);
       }
+    }
+    // Special effect for rainbow: shimmer the tagline
+    if (document.getElementById('rainbow-easter-egg').style.display === 'block') {
+      const tagline = document.querySelector('.tagline');
+      if (tagline) {
+        tagline.style.transition = 'text-shadow 0.7s, color 0.7s';
+        tagline.style.textShadow = '0 0 24px #fff, 0 0 48px #ff0, 0 0 64px #0ff';
+        tagline.style.color = '#fff700';
+        setTimeout(()=>{
+          tagline.style.textShadow = '';
+          tagline.style.color = '';
+        }, 2200);
+      }
+    }
+    // Special effect for cheese: show a cheese message
+    if (document.getElementById('cheese-easter-egg').style.display === 'block') {
+      const msg = document.createElement('div');
+      msg.textContent = 'You found the secret cheese! 🧀';
+      msg.style.position = 'fixed';
+      msg.style.bottom = '8vh';
+      msg.style.left = '50vw';
+      msg.style.transform = 'translateX(-50%)';
+      msg.style.background = '#fffbe7';
+      msg.style.color = '#222';
+      msg.style.fontWeight = 'bold';
+      msg.style.fontSize = '1.3em';
+      msg.style.padding = '0.7em 1.5em';
+      msg.style.borderRadius = '1.2em';
+      msg.style.boxShadow = '0 2px 12px #ffeb3b99';
+      msg.style.zIndex = 99999;
+      msg.style.opacity = '0.95';
+      document.body.appendChild(msg);
+      setTimeout(()=>{ msg.style.opacity = '0'; }, 1200);
+      setTimeout(()=>{ msg.remove(); }, 2000);
+    }
+    // Special effect for robot: glitch the title
+    if (document.getElementById('robot-easter-egg').style.display === 'block') {
+      const title = document.getElementById('oreo-title');
+      if (title) {
+        title.style.transition = 'filter 0.2s';
+        title.style.filter = 'contrast(2) hue-rotate(120deg)';
+        setTimeout(()=>{ title.style.filter = ''; }, 1200);
+      }
+    }
+    // Special effect for ghost: fade out the roast box
+    if (document.getElementById('ghost-easter-egg').style.display === 'block') {
+      const roastBox = document.querySelector('.roast-box');
+      if (roastBox) {
+        roastBox.style.transition = 'opacity 0.7s';
+        roastBox.style.opacity = '0.2';
+        setTimeout(()=>{ roastBox.style.opacity = ''; }, 2200);
+      }
+    }
+    // Special effect for disco: disco lights overlay
+    if (document.getElementById('disco-easter-egg').style.display === 'block') {
+      const disco = document.createElement('div');
+      disco.style.position = 'fixed';
+      disco.style.left = 0;
+      disco.style.top = 0;
+      disco.style.width = '100vw';
+      disco.style.height = '100vh';
+      disco.style.zIndex = 99998;
+      disco.style.pointerEvents = 'none';
+      disco.style.background = 'repeating-linear-gradient(135deg, #fff 0 2vw, #ff0 2vw 4vw, #0ff 4vw 6vw, #f0f 6vw 8vw, #fff 8vw 10vw)';
+      disco.style.opacity = '0.18';
+      disco.style.transition = 'opacity 0.7s';
+      document.body.appendChild(disco);
+      setTimeout(()=>{ disco.style.opacity = '0'; }, 1200);
+      setTimeout(()=>{ disco.remove(); }, 2000);
     }
     // Play Mario intro on first user click or keydown (3% chance)
     window.addEventListener('click', playMarioIntroEasterEggOnUserGesture);
