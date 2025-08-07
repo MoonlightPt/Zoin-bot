@@ -3,9 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zion Bot</title>
+  <title>Oreo Bot</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
   <style>
+  body {
+    background: linear-gradient(180deg, #0a0a23 0%, #0d47a1 60%, #74006e 100%);
+    position: relative;
+    /* Add a nebula overlay using a pseudo-element */
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse at 70% 20%, rgba(120,0,255,0.18) 0%, rgba(0,0,0,0) 60%),
+                radial-gradient(ellipse at 30% 80%, rgba(0,200,255,0.13) 0%, rgba(0,0,0,0) 60%),
+                radial-gradient(ellipse at 80% 70%, rgba(255,0,180,0.10) 0%, rgba(0,0,0,0) 70%);
+    mix-blend-mode: lighten;
+    pointer-events: none;
+  }
+
+  body {
+    color: #f8f8ff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  #star-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    display: block;
+    /* Add a faint blue glow for more depth */
+    box-shadow: 0 0 120px 40px #0d47a1cc inset;
+  }
+  .oreo-accent {
+    color: #fff;
+    background: linear-gradient(90deg, #a800b8 0%, #6d0088 50%, #1a0033 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 12px #7b2ff799;
+  }
+  .oreo-btn {
+    background: #c39dff;
+    color: #fff;
+    border: 2px solid #fff;
+    border-radius: 2em;
+    padding: 0.7em 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0 0.5em;
+    transition: background 0.2s, color 0.2s;
+    box-shadow: 0 2px 8px #0002;
+  }
+  .oreo-btn:hover {
+    background: #fff;
+    color: #7b2ff2;
+    border-color: #7b2ff2;
+  }
+  .oreo-cookie {
+    font-size: 2.2em;
+    margin: 0 0.2em;
+    vertical-align: middle;
+  }
   .roast-slider {
     display: flex;
     overflow: hidden;
@@ -91,47 +156,35 @@
     h1 {
       font-size: 2.7rem;
       margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #a259f7 10%, #7f53c0 50%, #4e54c8 90%);
+      background: linear-gradient(90deg, #222 10%, #fff 50%, #222 90%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-shadow: 0 2px 12px #a259f799;
+      text-shadow: 0 2px 12px #0006;
       letter-spacing: 1px;
     }
-    .tagline {
+  .tagline {
       font-size: 1.3rem;
-      color: #b39ddb;
+      color: #f3eaff;
       margin-bottom: 2rem;
       font-style: italic;
-      text-shadow: 0 1px 8px #0006;
+      text-shadow: 0 1px 8px #1a0033cc, 0 0 2px #fff;
     }
     .buttons {
       margin-bottom: 2rem;
     }
-    .btn {
-      display: inline-block;
-      background: #43a047;
-      color: #fff;
-      padding: 0.7em 1.5em;
-      border-radius: 2em;
-      font-weight: bold;
-      text-decoration: none;
-      margin: 0 0.5em;
-      transition: background 0.2s;
-      box-shadow: 0 2px 8px #0001;
-    }
-    .btn:hover { background: #388e3c; }
-    .roast-box {
-      background: #2e1534;
-      border-left: 6px solid #a259f7;
-      border-radius: 0.5em;
-      margin: 2rem auto 1rem auto;
-      padding: 1.2em 1em;
-      font-size: 1.15rem;
-      color: #e1bee7;
-      max-width: 480px;
-      box-shadow: 0 2px 18px #a259f733;
-    }
+    .btn { display: none; }
+  .roast-box {
+    background: rgba(34,0,51,0.92);
+    border-left: 6px solid #b993f7;
+    border-radius: 0.5em;
+    margin: 2rem auto 1rem auto;
+    padding: 1.2em 1em;
+    font-size: 1.15rem;
+    color: #fff;
+    max-width: 480px;
+    box-shadow: 0 2px 18px #7b2ff799;
+  }
     .footer {
       margin-top: 3rem;
       color: #b39ddb;
@@ -146,56 +199,62 @@
   </style>
 </head>
 <body>
+  <canvas id="star-canvas"></canvas>
   <div class="garden-bg">
-    <span class="plant" style="left:10vw;top:80vh;">🌱</span>
-    <span class="plant" style="left:60vw;top:70vh;">🪴</span>
-    <span class="egg" style="left:20vw;top:60vh;">🥚</span>
-    <span class="egg" style="left:80vw;top:65vh;">🥚</span>
-    <span class="slime" style="left:40vw;top:75vh;">🟢</span>
-    <span class="slime" style="left:70vw;top:78vh;">🟣</span>
+    <span class="plant" style="left:10vw;top:80vh;">�</span>
+    <span class="plant" style="left:60vw;top:70vh;">🌒</span>
+    <span class="egg" style="left:20vw;top:60vh;">�</span>
+    <span class="egg" style="left:80vw;top:65vh;">🌕</span>
+    <span class="slime" style="left:40vw;top:75vh;">🌟</span>
+    <span class="slime" style="left:70vw;top:78vh;">✨</span>
+    <span id="fox-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:50vw;top:50vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🦊</span>
+    <span id="alien-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:30vw;top:30vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">👽</span>
+    <span id="ufo-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:70vw;top:20vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🛸</span>
+    <span id="star-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:60vw;top:60vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🌠</span>
+    <span id="cookie-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:20vw;top:80vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🍪</span>
   </div>
   <div class="container">
-    <h1>Zion Bot</h1>
-    <div class="tagline">"Grow a garden, mutate a slime, and get roasted by your new favorite bot. Now with mood swings and maximum sass!"</div>
+    <h1><span class="oreo-accent">Oreo Bot</span> <span class="oreo-cookie">🪐</span></h1>
+    <div class="tagline">"Stacking up the sass, dunking on your garden, and serving up roasts with a cosmic twist. Welcome to the only Discord bot that's double-stuffed with attitude!"</div>
     <div class="buttons">
-      <a href="https://discord.com/oauth2/authorize?client_id=1102560580532961351&permissions=8&integration_type=0&scope=bot" class="btn" target="_blank" rel="noopener">Invite Bot</a>
-      <a href="#" class="btn" style="background:#0288d1;">Support Server</a>
+      <a href="https://discord.com/oauth2/authorize?client_id=1102560580532961351&permissions=8&integration_type=0&scope=bot" class="oreo-btn" target="_blank" rel="noopener">Invite Oreo Bot</a>
+      <a href="#" class="oreo-btn">Support Server</a>
     </div>
-    <div class="roast-box">
+    <div class="roast-box" style="background:#222;color:#fff;border-left:6px solid #fff;">
       <b>Roast of the Week:</b><br>
-      <i>Imagine having a sad slime and thinking it's a mood — grow up.</i>
+      <i>You're the cream in my cookie—sweet, but still about to get dunked.</i>
       <br><br>
-      <b>Bot Mood:</b> <span style="font-size:1.2em;">😄</span> <span style="color:#b39ddb;">Happy (bonus fruits!)</span>
+      <b>Bot Mood:</b> <span style="font-size:1.2em;">�</span> <span style="color:#fff;">Galactic (bonus coins!)</span>
       <br>
-      <b>Latest Achievement:</b> <span style="color:#ffd600;">Mutation Maniac</span>
+      <b>Latest Achievement:</b> <span style="color:#ffd600;">Oreo Overlord 🪐</span>
     </div>
     <div style="margin-top:2.5rem;">
-      <a href="#features" class="btn" style="background:#ffb300;color:#fff;">See Features</a>
-      <a href="#roastzone" class="btn" style="background:#e53935;color:#fff;">Roast Zone</a>
+      <a href="#features" class="oreo-btn">See Features</a>
+      <a href="#roastzone" class="oreo-btn">Roast Zone</a>
     </div>
 
     <!-- Features Section -->
     <div id="features" style="margin-top:4rem; padding:2rem 0;">
-      <h2 style="background:linear-gradient(90deg,#a259f7,#4e54c8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🌿 Game Features</h2>
-      <ul style="list-style:none; padding:0; font-size:1.13rem; color:#b3b3ff; text-align:left; max-width:500px; margin:0 auto;">
-        <li>🥚 <b>Egg Growth</b> — Hatch eggs into unique creatures with their own personalities.</li>
-        <li>🔬 <b>Mutations</b> — Rare and wild forms from events or randomness. Some slimes get weird. Like, really weird.</li>
-        <li>🍓 <b>Fruit Farming</b> — Harvest and sell fruits for coins. Some fruits are so rare, even the bot gets jealous.</li>
-        <li>💰 <b>Economy</b> — Upgrade, trade, and get rich. Or go broke buying roast protection charms.</li>
-        <li>🏡 <b>Garden Customization</b> — Design and expand your space. Make your garden the envy of the server.</li>
-        <li>😄 <b>Mood System</b> — Slimes with dynamic moods that affect performance and trigger unique roasts.</li>
-        <li>🔥 <b>Bot Roasts You</b> — Sassy personality mode with auto roasts based on gameplay, mood, and luck.</li>
-        <li>🎖️ <b>Achievements & Leaderboards</b> — Unlock titles like "Mutation Maniac" and "Roast Victim Supreme".</li>
+      <h2 style="background:linear-gradient(90deg,#222,#fff,#222);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🪐 Oreo Features</h2>
+      <ul style="list-style:none; padding:0; font-size:1.13rem; color:#f8f8ff; text-align:left; max-width:500px; margin:0 auto; text-shadow:0 1px 8px #1a0033cc;">
+        <li>� <b>Egg Growth</b> — Hatch cosmic eggs into unique creatures with their own personalities.</li>
+        <li>� <b>Galaxy Mutations</b> — Rare Oreo forms from events or randomness. Some slimes get double-stuffed.</li>
+        <li>� <b>Fruit Farming</b> — Harvest and sell fruits for coins. Some fruits are so rare, even the bot gets jealous.</li>
+        <li>� <b>Economy</b> — Upgrade, trade, and get rich. Or go broke buying roast protection charms.</li>
+        <li>� <b>Garden Customization</b> — Design and expand your space. Make your garden the envy of the server.</li>
+        <li>🌠 <b>Mood System</b> — Slimes with dynamic moods that affect performance and trigger unique roasts.</li>
+        <li>🔥 <b>Oreo Roasts You</b> — Sassy personality mode with auto roasts based on gameplay, mood, and luck.</li>
+        <li>� <b>Achievements & Leaderboards</b> — Unlock titles like "Oreo Overlord" and "Roast Victim Supreme".</li>
       </ul>
-      <div style="margin-top:2rem; color:#b39ddb; font-size:1.05rem;">
-        <b>Did you know?</b> The bot's mood changes daily. Try cheering it up (or making it mad) for different effects!
+      <div style="margin-top:2rem; color:#f3eaff; font-size:1.05rem; text-shadow:0 1px 8px #1a0033cc;">
+        <b>Did you know?</b> Oreo Bot's mood changes daily. Dunk it in milk for a surprise!
       </div>
     </div>
 
     <!-- Roast Zone Section -->
     <div id="roastzone" style="margin-top:4rem; padding:2rem 0;">
-      <h2 style="background:linear-gradient(90deg,#e539d1,#7f53c0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🔥 Roast Zone</h2>
-      <div style="font-size:1.13rem; color:#f06292; max-width:540px; margin:0 auto 1.5rem auto;">
+      <h2 style="background:linear-gradient(90deg,#e539d1,#7f53c0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem; text-shadow:0 1px 8px #1a0033cc;">🌠 Roast Zone</h2>
+      <div style="font-size:1.13rem; color:#fff; max-width:540px; margin:0 auto 1.5rem auto; text-shadow:0 1px 8px #1a0033cc;">
         <b>Live Roast Gallery</b>:
         <div class="roast-slider" id="roast-slider"></div>
         <div class="roast-slider-controls">
@@ -204,13 +263,13 @@
         </div>
       </div>
       <form id="roast-form" style="margin:1.5em auto 1em auto; max-width:420px; background:#1a1333; border-radius:0.5em; padding:1em 1em 0.5em 1em; box-shadow:0 2px 12px #a259f733;">
-        <label for="roast-input" style="color:#b39ddb; font-weight:bold;">Submit Your Roast:</label><br>
-        <textarea id="roast-input" rows="2" maxlength="180" style="width:100%; border-radius:0.4em; border:none; margin:0.5em 0; padding:0.5em; font-size:1em; background:#2e1534; color:#e1bee7;"></textarea><br>
-        <button type="submit" class="btn" style="background:#ffb300;color:#fff; margin-bottom:0.5em;">Send Roast</button>
-        <span id="roast-msg" style="color:#ffd600; font-size:0.98em; margin-left:0.5em;"></span>
+        <label for="roast-input" style="color:#fff; font-weight:bold; text-shadow:0 1px 8px #1a0033cc;">Submit Your Roast:</label><br>
+        <textarea id="roast-input" rows="2" maxlength="180" style="width:100%; border-radius:0.4em; border:none; margin:0.5em 0; padding:0.5em; font-size:1em; background:#2e1534; color:#fff; text-shadow:0 1px 8px #1a0033cc;"></textarea><br>
+        <button type="submit" class="btn" style="background:#ffb300;color:#222; font-weight:bold; margin-bottom:0.5em;">Send Roast</button>
+        <span id="roast-msg" style="color:#ffd600; font-size:0.98em; margin-left:0.5em; text-shadow:0 1px 8px #1a0033cc;"></span>
       </form>
-      <a href="#" class="btn" style="background:#7f53c0;color:#fff;">Roast Leaderboard</a>
-      <div style="margin-top:2rem; color:#b39ddb; font-size:1.05rem;">
+      <a href="#" class="btn" style="background:#7b2ff2;color:#fff; font-weight:bold; text-shadow:0 1px 8px #1a0033cc;">🌟 Roast Leaderboard</a>
+      <div style="margin-top:2rem; color:#f3eaff; font-size:1.05rem; text-shadow:0 1px 8px #1a0033cc;">
         <b>Roast Tip:</b> The more you play, the more creative the bot's roasts get. Survive the leaderboard if you can!
       </div>
       <script>
@@ -328,16 +387,103 @@
     </div>
 
     <div class="footer">
-      &copy; 2025 Grow a Garden Bot &mdash; <a href="#" style="color:#388e3c;text-decoration:underline;">Privacy Policy</a>
+      &copy; 2025 Oreo Bot &mdash; <a href="#" style="color:#b993f7;text-decoration:underline;">Privacy Policy</a>
       <br>
-      <span title="You call that a garden? Even my code grows faster.">🐌</span>
+      <span title="You call that a garden? Even my cookies grow faster.">�</span>
       <br><br>
-      <div id="creator" style="margin-top:1.5em; color:#b39ddb; font-size:1.08em;">
-        <b>Creator:</b> <span style="color:#ffd600;">cooki</span> <span style="font-size:1.2em;">🍪</span><br>
-        <span style="font-size:0.98em; color:#b39ddb;">Discord: <b style="color:#fff; background:#7f53c0; border-radius:0.3em; padding:0.1em 0.4em;">Oreo_pt</b></span><br>
-        <span style="font-size:0.98em; color:#b39ddb;">Built with love, sass, and a lot of slimes.</span>
+      <div id="creator" style="margin-top:1.5em; color:#f3eaff; font-size:1.08em; text-shadow:0 1px 8px #1a0033cc;">
+        <b>Creator:</b> <span style="color:#ffd600;">cooki</span> <span class="oreo-cookie">🪐</span><br>
+        <span style="font-size:0.98em; color:#f3eaff;">Discord: <b style="color:#222; background:#fff; border-radius:0.3em; padding:0.1em 0.4em;">Oreo_pt</b></span><br>
+        <span style="font-size:0.98em; color:#f3eaff;">Built with love, sass, and a lot of cosmic cookies.</span>
       </div>
     </div>
   </div>
+  <script>
+  // Starfield animation that adds stars as you scroll
+
+  // --- Multiple Easter Eggs ---
+  function showEasterEgg(id, chance) {
+    const el = document.getElementById(id);
+    if (Math.random() < chance) {
+      // Randomize position
+      const vw = Math.random() * 80 + 10; // 10vw to 90vw
+      const vh = Math.random() * 70 + 10; // 10vh to 80vh
+      el.style.left = vw + 'vw';
+      el.style.top = vh + 'vh';
+      el.style.display = 'block';
+      el.style.opacity = '0';
+      setTimeout(() => { el.style.opacity = '1'; }, 200);
+      // Hide after 7-15 seconds
+      setTimeout(() => { el.style.opacity = '0'; }, 7000 + Math.random()*8000);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    showEasterEgg('fox-easter-egg', 0.10);
+    showEasterEgg('alien-easter-egg', 0.07);
+    showEasterEgg('ufo-easter-egg', 0.05);
+    showEasterEgg('star-easter-egg', 0.08);
+    showEasterEgg('cookie-easter-egg', 0.12);
+  });
+  const canvas = document.getElementById('star-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  function resizeCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+  }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  function randomStar() {
+    return {
+      x: Math.random() * width,
+      y: Math.random() * height,
+      r: Math.random() * 1.2 + 0.5,
+      alpha: Math.random() * 0.7 + 0.3,
+      speed: Math.random() * 0.2 + 0.05
+    };
+  }
+
+  function addStars(n) {
+    for (let i = 0; i < n; i++) {
+      stars.push(randomStar());
+    }
+  }
+
+  // Add initial stars
+  addStars(80);
+
+  // Add more stars as you scroll
+  window.addEventListener('scroll', () => {
+    addStars(6);
+  });
+
+  function drawStars() {
+    ctx.clearRect(0, 0, width, height);
+    for (let s of stars) {
+      ctx.save();
+      ctx.globalAlpha = s.alpha;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, 2 * Math.PI);
+      ctx.fillStyle = '#fff';
+      ctx.shadowColor = '#b993f7';
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.restore();
+      // Move star down slowly for twinkle effect
+      s.y += s.speed;
+      if (s.y > height) {
+        s.x = Math.random() * width;
+        s.y = 0;
+      }
+    }
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+  </script>
 </body>
 </html>
