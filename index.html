@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +10,12 @@
   body {
     background: linear-gradient(180deg, #0a0a23 0%, #0d47a1 60%, #74006e 100%);
     position: relative;
-    /* Add a nebula overlay using a pseudo-element */
+    overflow-x: hidden;
+    min-height: 100vh;
   }
+ 
+  
+
   body::before {
     content: '';
     position: fixed;
@@ -19,9 +24,21 @@
     pointer-events: none;
     background: radial-gradient(ellipse at 70% 20%, rgba(120,0,255,0.18) 0%, rgba(0,0,0,0) 60%),
                 radial-gradient(ellipse at 30% 80%, rgba(0,200,255,0.13) 0%, rgba(0,0,0,0) 60%),
-                radial-gradient(ellipse at 80% 70%, rgba(255,0,180,0.10) 0%, rgba(0,0,0,0) 70%);
+                radial-gradient(ellipse at 80% 70%, rgba(255,0,180,0.10) 0%, rgba(0,0,0,0) 70%),
+                repeating-linear-gradient(120deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 40px);
     mix-blend-mode: lighten;
-    pointer-events: none;
+    animation: nebula-move 18s linear infinite alternate;
+  }
+  @keyframes nebula-move {
+    0% { background-position: 0 0, 0 0, 0 0, 0 0; }
+    100% { background-position: 60px 40px, -40px 60px, 80px 0, 120px 80px; }
+  }
+  
+  @keyframes fade-cha-cha-overlay {
+    0% { opacity: 0; }
+    10% { opacity: 0.95; }
+    90% { opacity: 0.95; }
+    100% { opacity: 0; }
   }
 
   body {
@@ -38,8 +55,10 @@
     pointer-events: none;
     z-index: 0;
     display: block;
-    /* Add a faint blue glow for more depth */
     box-shadow: 0 0 120px 40px #0d47a1cc inset;
+    filter: blur(0.5px) brightness(1.08);
+    opacity: 0.92;
+    transition: opacity 0.7s;
   }
   .oreo-accent {
     color: #fff;
@@ -136,14 +155,55 @@
     .plant, .egg, .slime {
       position: absolute;
       font-size: 2.5rem;
-      animation: float 3s ease-in-out infinite alternate;
+      animation: float 3s ease-in-out infinite alternate, pulse 2.5s infinite cubic-bezier(.4,2,.3,1);
+      will-change: transform, filter;
     }
-    .egg { left: 20vw; top: 60vh; animation-delay: 0.5s; }
-    .plant { left: 60vw; top: 70vh; animation-delay: 1.2s; }
-    .slime { left: 40vw; top: 75vh; animation-delay: 2s; }
+    .egg { left: 20vw; top: 60vh; animation-delay: 0.5s, 0.2s; }
+    .plant { left: 60vw; top: 70vh; animation-delay: 1.2s, 0.7s; }
+    .slime { left: 40vw; top: 75vh; animation-delay: 2s, 1.1s; }
     @keyframes float {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-20px); }
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-20px) scale(1.07); }
+    }
+    @keyframes pulse {
+      0%, 100% { filter: brightness(1) drop-shadow(0 0 0 #fff0); }
+      50% { filter: brightness(1.18) drop-shadow(0 0 12px #fff7); }
+    }
+    .egg {
+      animation: float 3s ease-in-out infinite alternate, pulse 2.5s infinite cubic-bezier(.4,2,.3,1), spin 7s linear infinite;
+      animation-delay: 0.5s, 0.2s, 0.7s;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .slime {
+      animation: float 3s ease-in-out infinite alternate, pulse 2.5s infinite cubic-bezier(.4,2,.3,1), bounce 2.2s infinite cubic-bezier(.6,1.5,.4,1);
+      animation-delay: 2s, 1.1s, 0.5s;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px) scale(1.08); }
+    }
+    /* Roast slider cosmic animation */
+    .roast-slider {
+      animation: slider-glow 4s ease-in-out infinite alternate;
+    }
+    @keyframes slider-glow {
+      0% { box-shadow: 0 0 24px 0 #7b2ff799, 0 1.5px 18px #fff2 inset; }
+      100% { box-shadow: 0 0 48px 8px #ffd600cc, 0 1.5px 18px #fff2 inset; }
+    }
+    /* Animate roast slides in */
+    .roast-slide {
+      transition: transform 0.6s cubic-bezier(.4,2,.3,1), opacity 0.6s cubic-bezier(.4,2,.3,1);
+    }
+    .roast-slide.active {
+      animation: pop-in 0.7s cubic-bezier(.4,2,.3,1);
+    }
+    @keyframes pop-in {
+      0% { transform: scale(0.7) rotate(-8deg); opacity: 0; }
+      60% { transform: scale(1.08) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
     }
     .container {
       position: relative;
@@ -152,16 +212,28 @@
       margin: 0 auto;
       padding: 3rem 1rem 2rem 1rem;
       text-align: center;
+      opacity: 0;
+      animation: fadein-container 1.2s cubic-bezier(.4,2,.3,1) 0.2s forwards;
     }
     h1 {
       font-size: 2.7rem;
       margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #222 10%, #fff 50%, #222 90%);
+      background: linear-gradient(270deg, #222 10%, #fff 50%, #7b2ff2 90%, #222 100%);
+      background-size: 400% 400%;
+      animation: header-gradient-move 8s ease-in-out infinite alternate;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       text-shadow: 0 2px 12px #0006;
       letter-spacing: 1px;
+    }
+    @keyframes header-gradient-move {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    @keyframes fadein-container {
+      0% { opacity: 0; transform: translateY(32px) scale(0.98); }
+      100% { opacity: 1; transform: none; }
     }
   .tagline {
       font-size: 1.3rem;
@@ -175,15 +247,20 @@
     }
     .btn { display: none; }
   .roast-box {
-    background: rgba(34,0,51,0.92);
+    background: rgba(34,0,51,0.72);
     border-left: 6px solid #b993f7;
-    border-radius: 0.5em;
+    border-radius: 1.2em;
     margin: 2rem auto 1rem auto;
-    padding: 1.2em 1em;
+    padding: 1.5em 1.2em;
     font-size: 1.15rem;
     color: #fff;
     max-width: 480px;
-    box-shadow: 0 2px 18px #7b2ff799;
+    box-shadow: 0 4px 32px 0 #7b2ff799, 0 1.5px 18px #fff2 inset;
+    backdrop-filter: blur(8px) saturate(1.2);
+    border-right: 2px solid #fff2;
+    border-top: 1.5px solid #fff1;
+    border-bottom: 1.5px solid #fff1;
+    transition: box-shadow 0.3s, background 0.3s;
   }
     .footer {
       margin-top: 3rem;
@@ -197,14 +274,15 @@
       .roast-box { font-size: 1rem; }
     }
   </style>
-</head>
-<body>
   <canvas id="star-canvas"></canvas>
   <div class="garden-bg">
-    <span class="plant" style="left:10vw;top:80vh;">�</span>
+    <span class="plant" style="left:10vw;top:80vh;">🌱</span>
     <span class="plant" style="left:60vw;top:70vh;">🌒</span>
-    <span class="egg" style="left:20vw;top:60vh;">�</span>
-    <span class="egg" style="left:80vw;top:65vh;">🌕</span>
+    <span class="egg" style="left:20vw;top:60vh;">🥚</span>
+    <a href="moon.html" id="moon-emoji-link" style="left:80vw;top:65vh;position:absolute;z-index:10;display:inline-block;text-decoration:none;pointer-events:auto;">
+      <span class="egg" id="moon-emoji" style="font-size:2.5rem;display:inline;pointer-events:auto;">🌕</span>
+    </a>
+    <span id="moon-text-link" style="position:absolute;left:78vw;top:72vh;z-index:11;font-size:1.2em;color:#fff;text-shadow:0 2px 8px #000a;cursor:pointer;background:rgba(34,0,51,0.7);padding:0.3em 1em;border-radius:1em;pointer-events:auto;">Go to the <b>Moon</b> 🌕</span>
     <span class="slime" style="left:40vw;top:75vh;">🌟</span>
     <span class="slime" style="left:70vw;top:78vh;">✨</span>
     <span id="fox-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:50vw;top:50vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🦊</span>
@@ -212,11 +290,18 @@
     <span id="ufo-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:70vw;top:20vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🛸</span>
     <span id="star-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:60vw;top:60vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🌠</span>
     <span id="cookie-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:20vw;top:80vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🍪</span>
+    <!-- New secret easter eggs -->
+    <span id="unicorn-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:35vw;top:25vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🦄</span>
+    <span id="donut-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:55vw;top:35vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🍩</span>
+    <span id="spaceinvader-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:25vw;top:15vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">👾</span>
+    <span id="milk-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:75vw;top:30vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🥛</span>
+    <span id="ice-easter-egg" style="display:none;position:absolute;font-size:2.5rem;left:45vw;top:10vh;z-index:2;pointer-events:none;transition:opacity 0.7s;">🧊</span>
   </div>
+  <!-- Mario Tube Easter Egg removed -->
   <div class="container">
-    <h1><span class="oreo-accent">Oreo Bot</span> <span class="oreo-cookie">🪐</span></h1>
-    <!-- Mario Intro Song Easter Egg (hidden audio) -->
-    <audio id="mario-intro-audio" src="https://archive.org/download/SuperMarioBros.ThemeMusic/SuperMario.mp3" preload="auto" style="display:none;"></audio>
+    <h1 id="oreo-title" style="cursor:pointer;"><span class="oreo-accent">Oreo Bot</span> <span class="oreo-cookie">🪐</span></h1>
+    <!-- Mario Stage Clear Easter Egg (hidden audio) -->
+    <audio id="mario-intro-audio" src="https://themushroomkingdom.net/sounds/wav/smb/smb_stage_clear.wav" preload="auto" style="display:none;"></audio>
     <div class="tagline">"Stacking up the sass, dunking on your garden, and serving up roasts with a cosmic twist. Welcome to the only Discord bot that's double-stuffed with attitude!"</div>
     <div class="buttons">
       <a href="https://discord.com/oauth2/authorize?client_id=1102560580532961351&permissions=8&integration_type=0&scope=bot" class="oreo-btn" target="_blank" rel="noopener">Invite Oreo Bot</a>
@@ -239,14 +324,14 @@
     <div id="features" style="margin-top:4rem; padding:2rem 0;">
       <h2 style="background:linear-gradient(90deg,#222,#fff,#222);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:2rem;margin-bottom:1rem;">🪐 Oreo Features</h2>
       <ul style="list-style:none; padding:0; font-size:1.13rem; color:#f8f8ff; text-align:left; max-width:500px; margin:0 auto; text-shadow:0 1px 8px #1a0033cc;">
-        <li>� <b>Egg Growth</b> — Hatch cosmic eggs into unique creatures with their own personalities.</li>
-        <li>� <b>Galaxy Mutations</b> — Rare Oreo forms from events or randomness. Some slimes get double-stuffed.</li>
-        <li>� <b>Fruit Farming</b> — Harvest and sell fruits for coins. Some fruits are so rare, even the bot gets jealous.</li>
-        <li>� <b>Economy</b> — Upgrade, trade, and get rich. Or go broke buying roast protection charms.</li>
-        <li>� <b>Garden Customization</b> — Design and expand your space. Make your garden the envy of the server.</li>
+        <li>🥚 <b>Egg Growth</b> — Hatch cosmic eggs into unique creatures with their own personalities.</li>
+        <li>🪐 <b>Galaxy Mutations</b> — Rare Oreo forms from events or randomness. Some slimes get double-stuffed.</li>
+        <li>🍇 <b>Fruit Farming</b> — Harvest and sell fruits for coins. Some fruits are so rare, even the bot gets jealous.</li>
+        <li>💰 <b>Economy</b> — Upgrade, trade, and get rich. Or go broke buying roast protection charms.</li>
+        <li>🌻 <b>Garden Customization</b> — Design and expand your space. Make your garden the envy of the server.</li>
         <li>🌠 <b>Mood System</b> — Slimes with dynamic moods that affect performance and trigger unique roasts.</li>
         <li>🔥 <b>Oreo Roasts You</b> — Sassy personality mode with auto roasts based on gameplay, mood, and luck.</li>
-        <li>� <b>Achievements & Leaderboards</b> — Unlock titles like "Oreo Overlord" and "Roast Victim Supreme".</li>
+        <li>🏆 <b>Achievements & Leaderboards</b> — Unlock titles like "Oreo Overlord" and "Roast Victim Supreme".</li>
       </ul>
       <div style="margin-top:2rem; color:#f3eaff; font-size:1.05rem; text-shadow:0 1px 8px #1a0033cc;">
         <b>Did you know?</b> Oreo Bot's mood changes daily. Dunk it in milk for a surprise!
@@ -391,7 +476,7 @@
     <div class="footer">
       &copy; 2025 Oreo Bot &mdash; <a href="#" style="color:#b993f7;text-decoration:underline;">Privacy Policy</a>
       <br>
-      <span title="You call that a garden? Even my cookies grow faster.">�</span>
+      <span title="You call that a garden? Even my cookies grow faster.">🌱</span>
       <br><br>
       <div id="creator" style="margin-top:1.5em; color:#f3eaff; font-size:1.08em; text-shadow:0 1px 8px #1a0033cc;">
         <b>Creator:</b> <span style="color:#ffd600;">cooki</span> <span class="oreo-cookie">🪐</span><br>
@@ -400,21 +485,181 @@
       </div>
     </div>
   </div>
+  <div id="moon-overlay" style="display:none;position:fixed;z-index:99999;left:0;top:0;width:100vw;height:100vh;background:radial-gradient(ellipse at 60% 60%,#fff 0%,#b3e5fc 40%,#222 100%);overflow:hidden;align-items:center;justify-content:center;">
+    <div style="position:absolute;left:60vw;top:55vh;transform:translate(-50%,-50%);">
+      <span style="font-size:7em;filter:drop-shadow(0 0 32px #fff8);">🌕</span>
+    </div>
+    <div style="position:absolute;left:38vw;top:68vh;transform:translate(-50%,-50%);">
+      <span style="font-size:6em;">🐻‍❄️</span>
+    </div>
+    <div id="tony-bubble" style="position:absolute;left:44vw;top:54vh;min-width:220px;max-width:340px;background:rgba(255,255,255,0.97);color:#222;border-radius:1.2em;padding:1.1em 1.3em;font-size:1.25em;box-shadow:0 4px 32px #0004,0 1.5px 18px #fff2 inset;line-height:1.5;display:flex;align-items:center;gap:0.7em;">
+      <span style="font-size:2em;">🐻‍❄️</span>
+      <span><b>Tony the Moon Bear:</b> Welcome to the moon! Got any cosmic cookies for me?</span>
+    </div>
+    <button id="moon-exit-btn" style="position:absolute;top:2vh;right:3vw;font-size:1.2em;padding:0.5em 1.2em;border-radius:2em;background:#222;color:#fff;border:none;box-shadow:0 2px 8px #0004;cursor:pointer;">Back to Earth</button>
+  </div>
   <script>
   // Starfield animation that adds stars as you scroll
 
-  // --- Mario Intro Song Easter Egg ---
-  function playMarioIntroEasterEgg() {
-    // 3% chance to play on page load
-    if (Math.random() < 0.03) {
-      const audio = document.getElementById('mario-intro-audio');
-      // Try to play after a short delay for user gesture compatibility
-      setTimeout(() => {
-        audio.volume = 0.5;
-        audio.play().catch(()=>{});
-      }, 800);
+  // --- Blackhole/Alternate Universe Easter Egg ---
+  function blackholeEasterEggToggle() {
+    if (!document.body.classList.contains('alt-universe')) {
+      // Enter alternate universe
+      if (document.getElementById('blackhole-overlay')) return;
+      // Create blackhole overlay
+      const overlay = document.createElement('div');
+      overlay.id = 'blackhole-overlay';
+      overlay.style.position = 'fixed';
+      overlay.style.left = 0;
+      overlay.style.top = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.zIndex = 9999;
+      overlay.style.pointerEvents = 'none';
+      overlay.style.overflow = 'hidden';
+      overlay.innerHTML = `<div id="blackhole-center"></div>`;
+      document.body.appendChild(overlay);
+      // Blackhole center
+      const center = overlay.firstChild;
+      center.style.position = 'absolute';
+      center.style.left = '50%';
+      center.style.top = '50%';
+      center.style.width = '0px';
+      center.style.height = '0px';
+      center.style.borderRadius = '50%';
+      center.style.background = 'radial-gradient(circle at 50% 50%, #000 70%, #222 100%)';
+      center.style.transform = 'translate(-50%,-50%)';
+      center.style.boxShadow = '0 0 80px 40px #000a, 0 0 120px 80px #7b2ff799';
+      center.style.transition = 'width 1.2s cubic-bezier(.7,2,.2,1), height 1.2s cubic-bezier(.7,2,.2,1)';
+      setTimeout(()=>{
+        center.style.width = '120vw';
+        center.style.height = '120vw';
+      }, 30);
+      // Suck in effect
+      document.body.style.transition = 'filter 1.2s cubic-bezier(.7,2,.2,1)';
+      document.body.style.filter = 'blur(2px) brightness(0.7)';
+      setTimeout(()=>{
+        document.body.style.filter = '';
+        document.body.style.transition = '';
+        // Flip the page and show alternate universe
+        document.body.classList.add('alt-universe');
+        overlay.remove();
+      }, 1400);
+    } else {
+      // Exit alternate universe
+      if (document.getElementById('blackhole-overlay')) return;
+      // Create blackhole overlay (reverse)
+      const overlay = document.createElement('div');
+      overlay.id = 'blackhole-overlay';
+      overlay.style.position = 'fixed';
+      overlay.style.left = 0;
+      overlay.style.top = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.zIndex = 9999;
+      overlay.style.pointerEvents = 'none';
+      overlay.style.overflow = 'hidden';
+      overlay.innerHTML = `<div id="blackhole-center"></div>`;
+      document.body.appendChild(overlay);
+      // Blackhole center
+      const center = overlay.firstChild;
+      center.style.position = 'absolute';
+      center.style.left = '50%';
+      center.style.top = '50%';
+      center.style.width = '120vw';
+      center.style.height = '120vw';
+      center.style.borderRadius = '50%';
+      center.style.background = 'radial-gradient(circle at 50% 50%, #000 70%, #222 100%)';
+      center.style.transform = 'translate(-50%,-50%)';
+      center.style.boxShadow = '0 0 80px 40px #000a, 0 0 120px 80px #7b2ff799';
+      center.style.transition = 'width 1.2s cubic-bezier(.7,2,.2,1), height 1.2s cubic-bezier(.7,2,.2,1)';
+      setTimeout(()=>{
+        center.style.width = '0px';
+        center.style.height = '0px';
+      }, 30);
+      // Suck out effect
+      document.body.style.transition = 'filter 1.2s cubic-bezier(.7,2,.2,1)';
+      document.body.style.filter = 'blur(2px) brightness(0.7)';
+      setTimeout(()=>{
+        document.body.style.filter = '';
+        document.body.style.transition = '';
+        document.body.classList.remove('alt-universe');
+        overlay.remove();
+      }, 1400);
     }
   }
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('oreo-title').addEventListener('click', blackholeEasterEggToggle);
+    // Moon Bear Easter Egg
+    const moon = document.getElementById('moon-emoji');
+    const moonText = document.getElementById('moon-text-link');
+    if (moon) {
+      moon.addEventListener('click', () => {
+        window.location.href = 'moon.html';
+      });
+    }
+    if (moonText) {
+      moonText.addEventListener('click', () => {
+        window.location.href = 'moon.html';
+      });
+    }
+  });
+
+  // --- Alternate Universe CSS ---
+  const altUniverseCSS = document.createElement('style');
+  altUniverseCSS.innerHTML = `
+    body.alt-universe {
+      transform: rotateX(180deg) rotateY(180deg);
+      filter: hue-rotate(160deg) invert(1) saturate(1.2) blur(0.5px);
+      transition: transform 1.2s cubic-bezier(.7,2,.2,1), filter 1.2s cubic-bezier(.7,2,.2,1);
+      background: linear-gradient(180deg, #000 0%, #d50000 100%);
+    }
+    body.alt-universe .oreo-accent {
+      background: linear-gradient(90deg, #fff 0%, #ffd600 50%, #ff00cc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 12px #000a;
+    }
+    body.alt-universe .roast-box {
+      background: rgba(0,0,0,0.82) !important;
+      border-left: 6px solid #ffd600 !important;
+      color: #fff !important;
+      box-shadow: 0 4px 32px 0 #ffd60099, 0 1.5px 18px #fff2 inset;
+    }
+    body.alt-universe .oreo-btn {
+      background: #ffd600;
+      color: #222;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px #ffd60044;
+    }
+    body.alt-universe .oreo-btn:hover {
+      background: #fff;
+      color: #ff00cc;
+      border-color: #ff00cc;
+    }
+    body.alt-universe .oreo-cookie {
+      filter: invert(1) hue-rotate(160deg);
+    }
+    body.alt-universe #star-canvas {
+      filter: blur(1.5px) brightness(1.2) invert(1) hue-rotate(160deg);
+      opacity: 0.7;
+    }
+    body.alt-universe .footer {
+      color: #ffd600;
+      text-shadow: 0 1px 8px #000a;
+    }
+  `;
+  document.head.appendChild(altUniverseCSS);
+  // --- Mario Intro Song Easter Egg ---
+document.addEventListener('DOMContentLoaded', function() {
+  // Try to play Mario intro on page load (3% chance)
+  if (Math.random() < 0.03) {
+    const audio = document.getElementById('mario-intro-audio');
+    audio.volume = 0.5;
+    audio.play().catch(()=>{});
+  }
+});
   function showEasterEgg(id, chance) {
     const el = document.getElementById(id);
     if (Math.random() < chance) {
@@ -436,7 +681,41 @@
     showEasterEgg('ufo-easter-egg', 0.05);
     showEasterEgg('star-easter-egg', 0.08);
     showEasterEgg('cookie-easter-egg', 0.12);
-    playMarioIntroEasterEgg();
+    // New easter eggs
+    showEasterEgg('unicorn-easter-egg', 0.04);
+    showEasterEgg('donut-easter-egg', 0.06);
+    showEasterEgg('spaceinvader-easter-egg', 0.05);
+    showEasterEgg('milk-easter-egg', 0.05);
+    showEasterEgg('ice-easter-egg', 0.05);
+    // Special effect for milk: if it appears, briefly show a splash overlay
+    if (document.getElementById('milk-easter-egg').style.display === 'block') {
+      const splash = document.createElement('div');
+      splash.style.position = 'fixed';
+      splash.style.left = 0;
+      splash.style.top = 0;
+      splash.style.width = '100vw';
+      splash.style.height = '100vh';
+      splash.style.zIndex = 99999;
+      splash.style.pointerEvents = 'none';
+      splash.style.background = 'radial-gradient(circle at 60% 60%, #fff 0%, #b3e5fc 40%, #222 100%)';
+      splash.style.opacity = '0.7';
+      splash.style.transition = 'opacity 0.7s';
+      document.body.appendChild(splash);
+      setTimeout(()=>{ splash.style.opacity = '0'; }, 1200);
+      setTimeout(()=>{ splash.remove(); }, 2000);
+    }
+    // Special effect for ice: freeze roast box if ice appears
+    if (document.getElementById('ice-easter-egg').style.display === 'block') {
+      const roastBox = document.querySelector('.roast-box');
+      if (roastBox) {
+        roastBox.style.transition = 'filter 0.7s';
+        roastBox.style.filter = 'blur(1.5px) brightness(1.1)';
+        setTimeout(()=>{ roastBox.style.filter = ''; }, 2200);
+      }
+    }
+    // Play Mario intro on first user click or keydown (3% chance)
+    window.addEventListener('click', playMarioIntroEasterEggOnUserGesture);
+    window.addEventListener('keydown', playMarioIntroEasterEggOnUserGesture);
   });
   const canvas = document.getElementById('star-canvas');
   const ctx = canvas.getContext('2d');
